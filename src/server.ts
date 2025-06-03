@@ -1,14 +1,18 @@
 import express from 'express'
+import loadEnv from './config'
 
 const app = express()
 
-const PORT:number = 2002
+
 
 app.get('/ping', (req,res) => {
     res.send("Pong")
 })
 
-app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`)
+loadEnv()
+console.log("Env vars loaded")
+
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on ${process.env.PORT}`)
 })
 
