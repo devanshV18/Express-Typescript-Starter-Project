@@ -19,3 +19,20 @@ if validation is not done, it throws a zodError.
 NOTE - we can use parse for sync flow and parseAsync for a non blocking async flow.
 
 A good flow to implement zod is to create a validator layer where we can create a generic function that takes schemas for object testing, and this generic fxn can asynchronously run a suitable middleware to validate the req.body object. Basically in our req res cycle when we want to validate we call this generic fxn and this generic fxn returns a middleware which has the access to req, res, next as well as the passed schema so we can handle both cases - successful validation and failded validation classes.
+
+
+///vvvviiii
+//EXPLANATION FOR THE validators->index.ts return usage or non usage and reasons:- 
+
+//note -> for a middleware function (either a standalone one or a returned middlware function), express expects it to return void (for sync middleware) or Promise<void> (for async middleware) but not a response object, hence in the index.ts of validators layer we cant write return res.... rather res automatically handles it.
+
+This is because :- In Express:
+Middleware is designed to handle, process, or pass along the request.
+
+You either:
+Call next() → to pass control to the next middleware
+Or 
+send a response via res.send() / res.json() etc. → to end the flow
+
+//vvvi -> In async middleware, the function returns a Promise.
+If you're using async, TypeScript says your function returns Promise<void> — meaning "You're returning a promise, but when it resolves, it still doesn't give back any value."
