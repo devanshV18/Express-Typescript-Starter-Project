@@ -1,6 +1,6 @@
 import express from "express"
 // import { Request, Response, NextFunction } from "express"
-import { pingHandler } from "../../controllers/pingHandler"
+import { pingHandler } from "../../controllers/ping.controller"
 import { validateRequestBody } from "../../validators"
 import { pingSchema } from "../../validators/ping.validator"
 

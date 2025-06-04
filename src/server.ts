@@ -1,6 +1,6 @@
 import express from 'express'
 import {serverConfig} from './config'
-import pingRouter from './routers/v1/pingRouter'
+import pingRouter from './routers/v1/ping.router'
 import v1Router from './routers/v1/index.router'
 import v2Router from './routers/v2/index.router'
 
