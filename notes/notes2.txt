@@ -70,3 +70,146 @@ app.get('/user/:id', async (req, res, next) => {
   const user = await getUserById(req.params.id)
   res.send(user)
 })
+
+11. Implementing a custom AppError class using interface
+
+a. interface lets us create a type/custom type.
+b. supports object oriented features such as extends/inheritance
+c. interface also acts as a contract.
+
+//some more examples and indepth analysis on interface
+
+ex1:
+
+//The below example demonstrates an interface acting exactly like a type
+
+interface LabledValue{
+    label: string
+}
+
+function printLabelObject(labelObj: LabledValue){
+    console.log(labelObj.label)
+}
+
+
+ex 2:
+
+//The below example demostrates how interface uses the extends keyword to inherit all the feature/properties from a class and add some more feature of our choice.
+
+interface Animal{
+    name: string
+}
+
+interface Dog extends Animal{
+    breed: stirng
+}
+
+
+//one of the most important use of interface is enforcing a contract on classes just like in C# In typescript it is enforced using implements keyword.
+
+//UNDERSTANDING THE CONCEPT OF CONTRACT ENFORCING IN DETAIL 
+
+🔧 In TypeScript, when a class implements an interface, it’s agreeing to fulfill a contract:
+It must implement all the properties and methods defined by that interface.
+If it fails to do so, TypeScript throws a compile-time error — just like a contract violation.
+
+🧠 Real-World Engineering Problem: Sensor System in a Smart Factory
+Imagine you're building a system for managing different types of IoT sensors in a smart factory (e.g., temperature, humidity, motion sensors).
+
+Each sensor must:
+
+A. Have a unique ID.
+
+B. Read data.
+
+C. Send data to the central server.
+
+This behavior is common to all sensors — and we want to enforce it using an interface.
+
+1️⃣ Define the Interface (the contract)
+
+interface Sensor {
+  id: string;
+  type: string;
+
+  readData(): number;
+  sendData(): void;
+}
+
+This interface ensures every Sensor must:
+
+Have an id and type.
+
+Implement readData() that returns a number.
+
+Implement sendData() that returns nothing.
+
+
+2️⃣ Implement the Interface in a Class
+
+1. TEMPRATURE Sensor
+
+class TemperatureSensor implements Sensor {
+  id: string;
+  type: string;
+
+  constructor(id: string) {
+    this.id = id;
+    this.type = "Temperature";
+  }
+
+  readData(): number {
+    // Simulate reading temperature data
+    return Math.random() * 100;
+  }
+
+  sendData(): void {
+    const temp = this.readData();
+    console.log(`[${this.type} - ${this.id}] Sending temperature: ${temp.toFixed(2)}°C`);
+  }
+}
+
+
+If this class misses any method or property from the Sensor interface, TypeScript will immediately throw an error. ✅ Contract enforced.
+
+2. MOTION Sensor
+
+class MotionSensor implements Sensor {
+  id: string;
+  type: string;
+
+  constructor(id: string) {
+    this.id = id;
+    this.type = "Motion";
+  }
+
+  readData(): number {
+    // Simulate motion intensity
+    return Math.floor(Math.random() * 10);
+  }
+
+  sendData(): void {
+    const motionLevel = this.readData();
+    console.log(`[${this.type} - ${this.id}] Motion detected: Level ${motionLevel}`);
+  }
+}
+
+
+4️⃣ Usage
+
+const sensors: Sensor[] = [
+  new TemperatureSensor("T-101"),
+  new MotionSensor("M-204"),
+];
+
+sensors.forEach(sensor => sensor.sendData());
+Now, you can treat all sensor objects polymorphically using the Sensor interface.
+
+✅ Summary (Crisp Recap):
+Concept	Description
+Interface	Defines a contract: required properties and methods.
+Implements	A class promises to follow the interface.
+Enforcement	TypeScript ensures the class follows the contract — else compile-time error.
+Use Case	Makes systems robust, predictable, and extensible — e.g., adding new sensors in future.
+
+
