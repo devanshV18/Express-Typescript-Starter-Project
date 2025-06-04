@@ -61,3 +61,12 @@ If no custom error middleware is defined, Express invokes its default error hand
 CRUX FROM POINT 3-7 = Express has a default error handler that is automatically added at the end of the middleware stack. When next(err) is called (e.g., from a controller or async middleware), Express skips any remaining non-error-handling middleware and passes control directly to the next error-handling middleware in the chain. If no custom error handlers are defined, Express’s built-in default error handler will handle the error.
 
 8. Alot of error handling may be done in the same way for multiple controllers where majority of the controllers might have the same or similar code handling their errors which is very tiring and unoptimised as it is repeated coding. So its better to implement a more generic or central error handler by somewhat leveraging or extending the default error handler provided to us by express. (Referring to approach at line 31 in pingHandler.ts)
+
+9. to tell express about our custom error handling functions, we specify it as a middleware usage at the end of all the routes defined in server.ts
+
+10. Starting with Express 5, route handlers and middleware that return a Promise will call next(value) automatically when they reject or throw an error. For example:
+
+app.get('/user/:id', async (req, res, next) => {
+  const user = await getUserById(req.params.id)
+  res.send(user)
+})
