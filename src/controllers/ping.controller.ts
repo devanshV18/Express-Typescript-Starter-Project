@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import fs from "fs/promises"
+import { AppError, InternalServerError } from "../utils/errors/app.error";
 
 //1.
 
@@ -61,12 +62,51 @@ import fs from "fs/promises"
 
 //5. express5 feature demo
 
+// export const pingHandler = async (req: Request, res:Response, next: NextFunction) => {
+
+//     await fs.readFile("sample") //the promise gets rejected at this line and the control directly invokes the next() as express5 has this feature -> The control goes to custom error handler if it exist or else the default error handler if no custom error handler is present.
+//     res.status(200).json({success: true, message: "Pong"})
+   
+// }
+
+
+//6. A better implementation of our custom error handler using the AppError class
+
+// export const pingHandler = async (req: Request, res:Response, next: NextFunction) => {
+
+//     try {
+//         await fs.readFile("sample")
+//         res.status(200).json({success: true, message: "Pong"})
+//     } catch (error) {
+//         //we are creating an object of AppError type and trowing it to be caught by our CEH
+//         //the AppError interface mandates us to specify name and message as it extends Error class and statusCode from the property added by ourselves.
+//         const appError: AppError = {
+//             name: "Internal Server Error",
+//             statusCode: 500,
+//             message: "Something went wrong with the server!"
+//         }
+
+//         throw appError //this will invoke the next error handling middleware which is nothing but our CEH as we have defined one in the middleware folder.
+//     }
+   
+// }
+
+
+//7. A proper demonstration of our InternalServerError class prepared on top of Error and AppError class, Using this custom class we will throw a InternalServerError and handle it using our CEH. This demonstrates a fully central and generalised error handling mech using classes
+
+
 export const pingHandler = async (req: Request, res:Response, next: NextFunction) => {
 
-    await fs.readFile("sample") //the promise gets rejected at this line and the control directly invokes the next() as express5 has this feature -> The control goes to custom error handler if it exist or else the default error handler if no custom error handler is present.
-    res.status(200).json({success: true, message: "Pong"})
+    try {
+        await fs.readFile("sample")
+        res.status(200).json({success: true, message: "Pong"})
+    } catch (error) {
+        throw new InternalServerError("Something Went Wrong Internally")
+    }
    
 }
+
+
 
 
 

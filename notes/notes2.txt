@@ -76,6 +76,7 @@ app.get('/user/:id', async (req, res, next) => {
 a. interface lets us create a type/custom type.
 b. supports object oriented features such as extends/inheritance
 c. interface also acts as a contract.
+d. lets us enforce contract from multiple interfaces. (multple inheritance/ multiple contract basically)
 
 //some more examples and indepth analysis on interface
 
