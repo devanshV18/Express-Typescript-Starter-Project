@@ -17,7 +17,6 @@ app.use('/api/v1', v1Router)
 app.use('/api/v1', v2Router)
 
 
-
 app.use(genericErrorHandler)
 
 app.listen(serverConfig.PORT, () => {
