@@ -7,11 +7,12 @@ const logger = winston.createLogger({
         winston.format.json(),
         winston.format.printf(({level, message, timestamp, ...data}) => {
             const output = {level, message, timestamp, correlationId:getCorrelationId(), data}
+            console.log("output", output)
             return JSON.stringify(output)
         })
     ),
     transports: [
-        new winston.transports.Console(),
+        new winston.transports.Console()
     ]
 })
 

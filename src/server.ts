@@ -19,7 +19,7 @@ app.use('/api/v1', v2Router)
 app.use(genericErrorHandler)
 
 app.listen(serverConfig.PORT, () => {
-    console.log(`Server is running on ${serverConfig.PORT} \n`)
+    console.log(`Server is running on ${serverConfig.PORT}\n`)
     //syntax -> logger.level("message", {<key>: <Any direct data or variable.>})
     logger.info("Please Press Ctrl + C to stop the Server.", {name: "Some data"})
     console.log("\n")
