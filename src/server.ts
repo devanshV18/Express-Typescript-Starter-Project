@@ -4,6 +4,7 @@ import pingRouter from './routers/v1/ping.router'
 import v1Router from './routers/v1/index.router'
 import v2Router from './routers/v2/index.router'
 import { genericErrorHandler } from './middlewares/error.middleware'
+import logger from './config/logger.config'
 
 const app = express()
 
@@ -20,6 +21,7 @@ app.use(genericErrorHandler)
 
 app.listen(serverConfig.PORT, () => {
     console.log(`Server is running on ${serverConfig.PORT}`)
-    console.log("Please press Ctrl + C to stop the server.")
+    //syntax -> logger.level("message", {<key>: <Any direct data or variable.>})
+    logger.info("Please Press Ctrl + C to stop the Server.", {name: "Some data"})
 })
 
