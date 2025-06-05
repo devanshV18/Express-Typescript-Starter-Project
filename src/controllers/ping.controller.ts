@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import fs from "fs/promises"
 import { AppError, InternalServerError } from "../utils/errors/app.error";
+import logger from "../config/logger.config";
 
 //1.
 
@@ -97,13 +98,11 @@ import { AppError, InternalServerError } from "../utils/errors/app.error";
 
 export const pingHandler = async (req: Request, res:Response, next: NextFunction) => {
 
-    try {
-        await fs.readFile("sample")
-        res.status(200).json({success: true, message: "Pong"})
-    } catch (error) {
-        throw new InternalServerError("Something Went Wrong Internally")
-    }
-   
+    logger.info("Ping Request received in controller layer")
+    res.status(200).json({
+        success: true,
+        message: "Pong"   
+    })
 }
 
 

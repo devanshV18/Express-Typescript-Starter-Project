@@ -1,11 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import { AnyZodObject } from "zod";
+import logger from "../config/logger.config";
 
 export function validateRequestBody(schema: AnyZodObject) {
     return async(req: Request, res:Response, next:NextFunction) => {
         try{
+            logger.info("validating request body")
             await schema.parseAsync(req.body) //waiting till we get a success or failed validation response.
-            console.log("Request Body is Appropriate.")
+            logger.info("Validation Successfull")
             next()
         }   
         catch(error){
