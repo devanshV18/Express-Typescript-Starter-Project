@@ -7,7 +7,7 @@ const logger = winston.createLogger({
         winston.format.json(),
         winston.format.printf(({level, message, timestamp, ...data}) => {
             const output = {level, message, timestamp, correlationId:getCorrelationId(), data}
-            console.log("output", output)
+            // console.log("output", output)
             return JSON.stringify(output)
         })
     ),
