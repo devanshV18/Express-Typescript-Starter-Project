@@ -1,4 +1,4 @@
-## This is a backend express-typescript starter template which can be used to build backend servers and project on top of it. The template consists of already configures components such as - folder structure, configuration of env variables, logging mechanism, custom error handler in express. 
+## This is a backend express-typescript starter template which can be used to build backend servers and project on top of it. The template consists of already configured components such as - folder structure, configuration of env variables, logging mechanism, custom error handler in express. 
 
 ## Clone this repo and extend it as per your requirement.
 
